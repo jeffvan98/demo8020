@@ -1,17 +1,17 @@
-reportReader:
+dashboardWebApplication:
   enabled: true
-  name: report-reader
+  name: dashboard-web-application
   nodeSelector: 
     role: usernp1
   image: 
     repository: acr7c02.azurecr.io/report-reader
     pullPolicy: IfNotPresent  
     tag: "0.0.1"
-  applicationPrefix: "/neurology"
-  applicationName: "Neurology"
-  signinUri: "https://$host/auth/neurology/start?rd=$escaped_request_uri"
-  authUri: "https://$host/auth/neurology/auth"
-
+  applicationPrefix: "/oncology/"
+  applicationName: "Oncology"
+  signinUri: "https://$host/auth/oncology/start?rd=$escaped_request_uri"
+  authUri: "https://$host/auth/oncology/auth"
+  
 reportWriter:
   enabled: true
   name: report-writer

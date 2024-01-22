@@ -1,0 +1,38 @@
+{{- if .Values.dashboardWebApplication.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.dashboardWebApplication.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.dashboardWebApplication.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.dashboardWebApplication.name }}
+    spec:
+      {{- with .Values.dashboardWebApplication.nodeSelector }}
+      nodeSelector:      
+        {{- toYaml . | nindent 8 }}
+      {{- end }}    
+      containers:
+      - name: {{ .Values.dashboardWebApplication.name }}
+        image: "{{ .Values.dashboardWebApplication.image.repository }}:{{ .Values.dashboardWebApplication.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.dashboardWebApplication.image.pullPolicy }}
+        volumeMounts:
+        - name: storage
+          mountPath: "/app/assets/reports"
+          readOnly: true
+        ports:
+        - containerPort: 5002
+        env:
+        - name: REPORT_READER_PREFIX
+          value: {{ .Values.dashboardWebApplication.applicationPrefix }}
+        - name: REPORT_READER_NAME
+          value: {{ .Values.dashboardWebApplication.applicationName }}
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistentVolumeClaim.name }}
+{{- end -}}
