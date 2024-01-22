@@ -1,0 +1,43 @@
+{{- if .Values.reportWriter.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.reportWriter.name }}
+spec:
+  schedule: "{{ .Values.reportWriter.schedule }}"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            azure.workload.identity/use: "true"
+        spec:
+          {{- with .Values.reportWriter.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: Never
+          serviceAccountName: {{ .Values.reportWriterServiceAccount.name }}
+          containers:
+            - name: {{ .Values.reportWriter.name }}
+              image: "{{ .Values.reportWriter.image.repository }}:{{ .Values.reportWriter.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.reportWriter.image.pullPolicy }}
+              env:
+              - name: REPORT_WRITER_KEY_VAULT_URL
+                value: "{{ .Values.reportWriter.keyVaultUrl }}"
+              - name: REPORT_WRITER_SECRET_NAME
+                value: "{{ .Values.reportWriter.secretName }}"
+              - name: REPORT_WRITER_DATABASE_NAME
+                value: "{{ .Values.reportWriter.databaseName }}"
+              - name: REPORT_WRITER_COLLECTION_NAME
+                value: "{{ .Values.reportWriter.collectionName }}"
+              volumeMounts:
+              - name: storage
+                mountPath: "/app/export"
+                readOnly: false
+          volumes:
+          - name: storage
+            persistentVolumeClaim:
+              claimName:  {{ .Values.persistentVolumeClaim.name }}
+{{- end -}}       

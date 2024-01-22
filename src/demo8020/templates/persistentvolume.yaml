@@ -1,0 +1,25 @@
+{{- if .Values.persistentVolume.enabled -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: blob.csi.azure.com
+  name: {{ .Values.persistentVolume.name }}
+spec:
+  capacity:
+    storage: 1Pi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain  
+  storageClassName: azureblob-nfs-premium
+  mountOptions:
+    - nconnect=4
+  csi:
+    driver: blob.csi.azure.com
+    volumeHandle: {{ .Values.persistentVolume.azureStorageAccount }}_{{ .Values.persistentVolume.azureBlobContainer }}
+    volumeAttributes:
+      resourceGroup: {{ .Values.persistentVolume.azureResourceGroup }}
+      storageAccount: {{ .Values.persistentVolume.azureStorageAccount }}
+      containerName: {{ .Values.persistentVolume.azureBlobContainer }}
+      protocol: nfs
+{{- end -}}

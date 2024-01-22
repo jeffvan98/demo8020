@@ -1,0 +1,38 @@
+{{- if .Values.reportReader.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.reportReader.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.reportReader.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.reportReader.name }}
+    spec:
+      {{- with .Values.reportReader.nodeSelector }}
+      nodeSelector:      
+        {{- toYaml . | nindent 8 }}
+      {{- end }}    
+      containers:
+      - name: {{ .Values.reportReader.name }}
+        image: "{{ .Values.reportReader.image.repository }}:{{ .Values.reportReader.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.reportReader.image.pullPolicy }}
+        volumeMounts:
+        - name: storage
+          mountPath: "/app/main/static/reports"
+          readOnly: true
+        ports:
+        - containerPort: 5002
+        env:
+        - name: REPORT_READER_PREFIX
+          value: {{ .Values.reportReader.applicationPrefix }}
+        - name: REPORT_READER_NAME
+          value: {{ .Values.reportReader.applicationName }}
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistentVolumeClaim.name }}
+{{- end -}}

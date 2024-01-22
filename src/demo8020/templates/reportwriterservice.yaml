@@ -1,0 +1,8 @@
+{{- if .Values.reportWriterServiceAccount.enabled -}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    azure.workload.identity/client-id: {{ .Values.reportWriterServiceAccount.clientId }}
+  name: {{ .Values.reportWriterServiceAccount.name }}
+{{- end -}}

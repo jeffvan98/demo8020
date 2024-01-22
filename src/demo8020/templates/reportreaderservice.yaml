@@ -1,0 +1,12 @@
+{{- if .Values.reportReader.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.reportReader.name }}
+spec:
+  selector:
+    app: {{ .Values.reportReader.name }}
+  ports:
+  - port: 5002
+    targetPort: 5002
+{{- end -}}

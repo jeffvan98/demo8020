@@ -1,0 +1,44 @@
+reportReader:
+  enabled: true
+  name: report-reader
+  nodeSelector: 
+    role: usernp1
+  image: 
+    repository: acr7c02.azurecr.io/report-reader
+    pullPolicy: IfNotPresent  
+    tag: "0.0.1"
+  applicationPrefix: "/neurology"
+  applicationName: "Neurology"
+  signinUri: "https://$host/auth/neurology/start?rd=$escaped_request_uri"
+  authUri: "https://$host/auth/neurology/auth"
+
+reportWriter:
+  enabled: true
+  name: report-writer
+  schedule: "0 0 * * *"
+  nodeSelector: 
+    role: usernp2
+  image: 
+    repository: acr7c02.azurecr.io/report-writer
+    pullPolicy: IfNotPresent  
+    tag: "0.0.1"
+  keyVaultUrl: "https://vault7c02.vault.azure.net"
+  secretName: "mongo-connection"
+  databaseName: "PatientData"
+  collectionName: "Default"
+
+reportWriterServiceAccount:
+  enabled: true
+  name: neurologysvc
+  clientId: "c1496868-d258-4cae-93b6-a3e00b70d60e"
+
+persistentVolumeClaim:
+  enabled: true
+  name: store7c02a-container03-claim
+
+persistentVolume:
+  enabled: true
+  name: store7c02a-container03
+  azureResourceGroup: 2023-12-04-RG-01
+  azureStorageAccount: store7c02a
+  azureBlobContainer: container03
