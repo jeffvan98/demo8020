@@ -6,8 +6,8 @@ dashboardWebApplication:
   image: 
     repository: acr7c02.azurecr.io/demo8020-dashboard-web-application
     pullPolicy: IfNotPresent  
-    tag: "0.0.1"
-  applicationPrefix: "/oncology/"
+    tag: "0.0.3"
+  applicationPrefix: "/oncology"
   applicationName: "Oncology"
   signinUri: "https://$host/auth/oncology/start?rd=$escaped_request_uri"
   authUri: "https://$host/auth/oncology/auth"
@@ -21,7 +21,7 @@ reportWriter:
   image: 
     repository: acr7c02.azurecr.io/demo8020-report-writer
     pullPolicy: IfNotPresent  
-    tag: "0.0.1"
+    tag: "0.0.3"
   keyVaultUrl: "https://vault7c02.vault.azure.net"
   secretName: "mongo-connection"
   databaseName: "PatientData"
@@ -30,7 +30,7 @@ reportWriter:
 reportWriterServiceAccount:
   enabled: true
   name: oncologysvc
-  clientId: "c1496868-d258-4cae-93b6-a3e00b70d60e"
+  clientId: "94e6b2ea-b0a3-478e-b02f-491fae30b7a1"
 
 persistentVolumeClaim:
   enabled: true

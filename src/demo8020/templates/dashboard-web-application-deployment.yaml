@@ -27,9 +27,9 @@ spec:
         ports:
         - containerPort: 5002
         env:
-        - name: REPORT_READER_PREFIX
-          value: {{ .Values.dashboardWebApplication.applicationPrefix }}
-        - name: REPORT_READER_NAME
+        - name: DASHBOARD_WEB_APPLICATION_PREFIX
+          value: "{{ .Values.dashboardWebApplication.applicationPrefix }}/"
+        - name: DASHBOARD_WEB_APPLICATION_NAME
           value: {{ .Values.dashboardWebApplication.applicationName }}
       volumes:
       - name: storage

@@ -4,11 +4,11 @@ export RESOURCE_GROUP="2023-12-04-RG-01"
 export CLUSTER_NAME="aks7c02"
 export LOCATION="westus3"
 export SUBSCRIPTION="$(az account show --query id --output tsv)"
-export USER_ASSIGNED_IDENTITY_NAME="neurologysvc"
-export SERVICE_ACCOUNT_NAMESPACE="neurology"
-export SERVICE_ACCOUNT_NAME="neurologysvc"
-export USER_ASSIGNED_IDENTITY_NAME="neurologysvc"
-export FEDERATED_IDENTITY_CREDENTIAL_NAME="neurologysvc"
+export USER_ASSIGNED_IDENTITY_NAME="oncologysvc"
+export SERVICE_ACCOUNT_NAMESPACE="oncology"
+export SERVICE_ACCOUNT_NAME="oncologysvc"
+export USER_ASSIGNED_IDENTITY_NAME="oncologysvc"
+export FEDERATED_IDENTITY_CREDENTIAL_NAME="oncologysvc"
 export KEYVAULT_NAME="vault7c02"
 
 # Create a Managed Identity
@@ -40,6 +40,9 @@ export USER_ASSIGNED_CLIENT_ID="$(az identity show \
 --name "${USER_ASSIGNED_IDENTITY_NAME}" \
 --query 'clientId' \
 -otsv)"
+
+echo "ATTENTION - User Assigned Client ID:"
+echo $USER_ASSIGNED_CLIENT_ID
 
 # Grant Key Vault Get Secret Permissions to the Managed ID
 az keyvault set-policy \
