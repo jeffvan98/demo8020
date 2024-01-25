@@ -6,7 +6,7 @@ dashboardWebApplication:
   image: 
     repository: acr7c02.azurecr.io/demo8020-dashboard-web-application
     pullPolicy: IfNotPresent  
-    tag: "0.0.3"
+    tag: "0.0.5"
   applicationPrefix: "/oncology"
   applicationName: "Oncology"
   signinUri: "https://$host/auth/oncology/start?rd=$escaped_request_uri"
@@ -21,7 +21,7 @@ reportWriter:
   image: 
     repository: acr7c02.azurecr.io/demo8020-report-writer
     pullPolicy: IfNotPresent  
-    tag: "0.0.3"
+    tag: "0.0.5"
   keyVaultUrl: "https://vault7c02.vault.azure.net"
   secretName: "mongo-connection"
   databaseName: "PatientData"
