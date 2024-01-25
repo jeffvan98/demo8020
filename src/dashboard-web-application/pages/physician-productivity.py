@@ -45,11 +45,17 @@ def serve_layout():
     return dbc.Container([
         dbc.Row([
             html.H1("Physician Productivity", className="display-3"),
-            html.P("Objective: Assess the workload and productivity of physicians to optimize staffing levels."),
-            html.P(datetime.now())
+            html.P("Objective: Assess the workload and productivity of physicians to optimize staffing levels.")
         ]),
         dbc.Row(
             dcc.Graph(id="bar-chart", figure=fig)
+        ),
+        dbc.Row(
+            html.Div([
+                html.Hr(),
+                html.Div("Report generated at: " + datetime.now().strftime("%A, %B %d, %Y %I:%M %p %z"))
+            ], style={"textAlign": "center"})
+
         )
     ])
 

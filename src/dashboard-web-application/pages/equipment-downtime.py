@@ -38,11 +38,17 @@ def serve_layout():
     return dbc.Container([
         dbc.Row([
             html.H1("Equipment Downtime", className="display-3"),
-            html.P("Objective: Minimize equipment downtime and ensure the availability of critical medical devices."),
-            html.P(datetime.now())           
+            html.P("Objective: Minimize equipment downtime and ensure the availability of critical medical devices.")
         ]),
         dbc.Row(
             dcc.Graph(id="bar-chart", figure=fig)
+        ),
+        dbc.Row(
+            html.Div([
+                html.Hr(),
+                html.Div("Report generated at: " + datetime.now().strftime("%A, %B %d, %Y %I:%M %p %z"))
+            ], style={"textAlign": "center"})
+
         )
     ])
 

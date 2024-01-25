@@ -41,12 +41,19 @@ def serve_layout():
     return dbc.Container([
         dbc.Row([
             html.H1("Laboratory Turnaround Time", className="display-3"),
-            html.P("Objective: Assess the efficiency of laboratory services and ensure timely delivery of diagnostic information."),
-            html.P(datetime.now())
+            html.P("Objective: Assess the efficiency of laboratory services and ensure timely delivery of diagnostic information.")
         ]),
         dbc.Row(
             dcc.Graph(id="bar-chart", figure=fig)
+        ),
+        dbc.Row(
+            html.Div([
+                html.Hr(),
+                html.Div("Report generated at: " + datetime.now().strftime("%A, %B %d, %Y %I:%M %p %z"))
+            ], style={"textAlign": "center"})
+
         )
+
     ])
 
 layout = serve_layout
