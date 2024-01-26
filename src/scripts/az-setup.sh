@@ -1,15 +1,15 @@
 #! /bin/bash
 
-export RESOURCE_GROUP="2023-12-04-RG-01"
-export CLUSTER_NAME="aks7c02"
-export LOCATION="westus3"
-export SUBSCRIPTION="$(az account show --query id --output tsv)"
-export USER_ASSIGNED_IDENTITY_NAME="oncologysvc"
-export SERVICE_ACCOUNT_NAMESPACE="oncology"
-export SERVICE_ACCOUNT_NAME="oncologysvc"
-export USER_ASSIGNED_IDENTITY_NAME="oncologysvc"
-export FEDERATED_IDENTITY_CREDENTIAL_NAME="oncologysvc"
-export KEYVAULT_NAME="vault7c02"
+export RESOURCE_GROUP="2023-12-04-RG-01" # resource group of k8s cluster
+export CLUSTER_NAME="aks7c02" # name of k8s cluster
+export LOCATION="westus3" # location of k8s cluster
+export SUBSCRIPTION="$(az account show --query id --output tsv)" # subscription of k8s cluster
+export USER_ASSIGNED_IDENTITY_NAME="oncologysvc" #  name of managed id
+export SERVICE_ACCOUNT_NAMESPACE="oncology" # name of service account in k8s
+export SERVICE_ACCOUNT_NAME="oncologysvc" # namespace that contains service account
+export FEDERATED_IDENTITY_CREDENTIAL_NAME="oncologysvc" # use the same name as user_assigned_identity_name
+export KEYVAULT_NAME="vault7c02" # keyvault name
+export KEYVAULT_RESOURCE_GROUP="2023-12-04-RG-01" # keyvault resource group
 
 # Create a Managed Identity
 az identity create \
@@ -47,5 +47,6 @@ echo $USER_ASSIGNED_CLIENT_ID
 # Grant Key Vault Get Secret Permissions to the Managed ID
 az keyvault set-policy \
 --name "${KEYVAULT_NAME}" \
+--resource-group "${KEYVAULT_RESOURCE_GROUP}" \
 --secret-permissions get \
 --spn "${USER_ASSIGNED_CLIENT_ID}"
