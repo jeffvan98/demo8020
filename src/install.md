@@ -2,8 +2,10 @@
 
 1. Prerequisites
 
-- ingress-nginx and oauth2-proxy must be installed (including supporting Entra Application) and configured before installing this application.
+- ingress-nginx and oauth2-proxy must be installed (including supporting Entra Application) and configured before installing this application
+   - Note: oauth2-proxy installation is assumed to be specific to this namespace; in other words, an example would be: auth-oncology and oncology namespaces; or auth-cardiology and cardiology  In these examples, oauth2-proxy is in the auth-XXX namespace and the app is in the XXX namespace.
 - key-vault - the demo requires an instance of key vault
+   - inside this keyvault, you'll need to create a secret to hold the mongo db connection string (see below); for convenience, call this secret: mongo-connection
 - storage account - both the report-writer and dashboard-web-application write and read from a blob storage container
 - report-writer application:
    - this part of the application is designed to perform a simple query against a mongo database.  
@@ -36,7 +38,7 @@ This will create the application's Managed Identity and Federated Credential and
 
 4. Update demo8020/values.yaml and install the helm chart
 
-This will create all the application artifacts in Kubernetes.
+This will create all the application artifacts in Kubernetes.  (Run from src folder)
 
 ```bash
 helm install demo8020 demo8020 -n <NAMESPACE>
