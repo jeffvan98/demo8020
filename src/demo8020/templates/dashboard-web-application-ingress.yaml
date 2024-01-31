@@ -4,6 +4,7 @@ kind: Ingress
 metadata:
    name: {{ .Values.dashboardWebApplication.name }}
    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/use-regex: "true"
       nginx.ingress.kubernetes.io/rewrite-target: "{{ .Values.dashboardWebApplication.applicationPrefix }}/$2"
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Email
