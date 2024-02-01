@@ -7,6 +7,9 @@
 - key-vault - the demo requires an instance of key vault
    - inside this keyvault, you'll need to create a secret to hold the mongo db connection string (see below); for convenience, call this secret: mongo-connection
 - storage account - both the report-writer and dashboard-web-application write and read from a blob storage container
+   - storage account must have NFS v3 and hierarchical namespaces enabled
+- Azure Blob Storage CSI Driver must be installed on cluster 
+   - see: https://learn.microsoft.com/en-us/azure/aks/azure-blob-csi?tabs=NFS
 - report-writer application:
    - this part of the application is designed to perform a simple query against a mongo database.  
    - you will require a mongo database (or compatible) that the report-writer can query
