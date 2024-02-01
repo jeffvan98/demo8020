@@ -43,6 +43,7 @@ export USER_ASSIGNED_CLIENT_ID="$(az identity show \
 
 echo "ATTENTION - User Assigned Client ID:"
 echo $USER_ASSIGNED_CLIENT_ID
+read -p "Press enter to continue"
 
 # Grant Key Vault Get Secret Permissions to the Managed ID
 az keyvault set-policy \

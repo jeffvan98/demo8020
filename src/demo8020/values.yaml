@@ -6,11 +6,11 @@ dashboardWebApplication:
   image: 
     repository: acr7c02.azurecr.io/demo8020-dashboard-web-application
     pullPolicy: IfNotPresent  
-    tag: "0.0.5"
-  applicationPrefix: "/oncology"
-  applicationName: "Oncology"
-  signinUri: "https://$host/auth/oncology/start?rd=$escaped_request_uri"
-  authUri: "https://$host/auth/oncology/auth"
+    tag: "0.0.6"
+  applicationPrefix: "/radiology"
+  applicationName: "Radiology"
+  signinUri: "https://$host/auth/radiology/start?rd=$escaped_request_uri"
+  authUri: "https://$host/auth/radiology/auth"
   
 reportWriter:
   enabled: true
@@ -21,7 +21,7 @@ reportWriter:
   image: 
     repository: acr7c02.azurecr.io/demo8020-report-writer
     pullPolicy: IfNotPresent  
-    tag: "0.0.5"
+    tag: "0.0.6"
   keyVaultUrl: "https://vault7c02.vault.azure.net"
   secretName: "mongo-connection"
   databaseName: "PatientData"
@@ -29,16 +29,16 @@ reportWriter:
 
 reportWriterServiceAccount:
   enabled: true
-  name: oncologysvc
-  clientId: "94e6b2ea-b0a3-478e-b02f-491fae30b7a1"
+  name: radiologysvc
+  clientId: "1125150f-9f14-45aa-be81-dfbc86c91a24"
 
 persistentVolumeClaim:
   enabled: true
-  name: store7c02a-container04-claim
+  name: store7c02a-container02-claim
 
 persistentVolume:
   enabled: true
-  name: store7c02a-container04
+  name: store7c02a-container02
   azureResourceGroup: 2023-12-04-RG-01
   azureStorageAccount: store7c02a
-  azureBlobContainer: container04
+  azureBlobContainer: container02
